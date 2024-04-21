@@ -106,7 +106,7 @@
                 const $mainChatInbox = $(".wsus__chat_area_body");
                 const $messageBox = $(".message-box");
 
-                function formatDateTime(dateTimeString) {
+                const formatDateTime = dateTimeString => {
                     const options = {
                         year: 'numeric',
                         month: 'short',
@@ -119,42 +119,42 @@
                         .format(new Date(dateTimeString));
                 }
 
-                function scrollToBottom() {
+                const scrollToBottom = () => {
                     $mainChatInbox.scrollTop($mainChatInbox.prop("scrollHeight"));
                 }
 
-                $body.on("click", ".chat-user-profile", e => {
-                    const $this = $(e.currentTarget);
+                const viewChat = () => {
+                    $body.on("click", ".chat-user-profile", e => {
+                        const $this = $(e.currentTarget);
 
-                    const receiverId = $this.data("id");
-                    const senderImage = $this.find("img").attr("src");
-                    const chatUserName = $this.find("h4").text();
+                        const receiverId = $this.data("id");
+                        const senderImage = $this.find("img").attr("src");
+                        const chatUserName = $this.find("h4").text();
 
-                    $mainChatInbox.attr("data-inbox", receiverId);
+                        $mainChatInbox.attr("data-inbox", receiverId);
 
-                    $("#receiver_id").val(receiverId);
-                    $this.find(".wsus_chat_list_img").removeClass("msg-notification");
+                        $("#receiver_id").val(receiverId);
+                        $this.find(".wsus_chat_list_img").removeClass("msg-notification");
 
-                    $.ajax({
-                        method: "GET",
-                        url: '{{ route("user.get-messages") }}',
-                        data: {
-                            receiver_id: receiverId
-                        },
-                        beforeSend: () => {
-                            $mainChatInbox.html("");
-                            // set chat inbox title
-                            $("#chat-inbox-title").text(`Chat with ${chatUserName}`)
-                        },
-                        success: response => {
-                            $.each(response, (index, value) => {
-                                const { USER } = window;
-                                const {sender_id, message, created_at} = value;
+                        $.ajax({
+                            method: "GET",
+                            url: '{{ route("user.get-messages") }}',
+                            data: {
+                                receiver_id: receiverId
+                            },
+                            beforeSend: () => {
+                                $mainChatInbox.html("");
+                                $("#chat-inbox-title").text(`Chat With ${chatUserName}`)
+                            },
+                            success: response => {
+                                $.each(response, (index, value) => {
+                                    const {USER} = window;
+                                    const {sender_id, message, created_at} = value;
 
-                                let chat;
+                                    let chat;
 
-                                if (sender_id === USER.id) {
-                                    chat = `<div class="wsus__chat_single single_chat_2">
+                                    if (sender_id === USER.id) {
+                                        chat = `<div class="wsus__chat_single single_chat_2">
                                         <div class="wsus__chat_single_img">
                                             <img src="${USER.image}"
                                                 alt="user" class="img-fluid">
@@ -164,8 +164,8 @@
                                             <span>${formatDateTime(created_at)}</span>
                                         </div>
                                     </div>`;
-                                } else {
-                                    chat = `<div class="wsus__chat_single">
+                                    } else {
+                                        chat = `<div class="wsus__chat_single">
                                         <div class="wsus__chat_single_img">
                                             <img src="${senderImage}"
                                                 alt="user" class="img-fluid">
@@ -175,40 +175,40 @@
                                             <span>${formatDateTime(created_at)}</span>
                                         </div>
                                     </div>`;
-                                }
+                                    }
 
-                                $mainChatInbox.append(chat);
-                            });
+                                    $mainChatInbox.append(chat);
+                                });
 
-                            // scroll to bottom
-                            scrollToBottom();
-                        },
-                        error: (xhr, status, error) => {
-                            console.log(xhr, status, error);
-                        },
-                        complete: () => {
+                                scrollToBottom();
+                            },
+                            error: (xhr, status, error) => {
+                                console.log(xhr, status, error);
+                            },
+                            complete: () => {
 
+                            }
+                        });
+                    });
+                }
+
+                const sendChat = () => {
+                    $body.on("submit", "#message-form", e => {
+                        e.preventDefault();
+
+                        const $this = $(e.currentTarget);
+                        const formData = $this.serialize();
+                        const {USER} = window;
+
+                        let messageData = $messageBox.val();
+                        let formSubmitting = false;
+
+                        if (formSubmitting || messageData === "") {
+                            return;
                         }
-                    })
-                })
 
-                $body.on("submit", "#message-form", e => {
-                    e.preventDefault();
-
-                    const $this = $(e.currentTarget);
-
-                    const formData = $this.serialize();
-                    let messageData = $messageBox.val();
-                    let formSubmitting = false;
-
-                    if (formSubmitting || messageData === "") {
-                        return;
-                    }
-
-                    const { USER } = window;
-
-                    // set message in inbox
-                    let message = `<div class="wsus__chat_single single_chat_2">
+                        // set message in inbox
+                        let message = `<div class="wsus__chat_single single_chat_2">
                             <div class="wsus__chat_single_img">
                                 <img src="${USER.image}"
                                     alt="user" class="img-fluid">
@@ -219,37 +219,39 @@
                             </div>
                         </div>`;
 
-                    $mainChatInbox.append(message);
+                        $mainChatInbox.append(message);
 
-                    $messageBox.val("");
+                        $messageBox.val("");
 
-                    scrollToBottom()
+                        scrollToBottom()
 
-                    $.ajax({
-                        method: "POST",
-                        url: '{{ route("user.send-message") }}',
-                        data: formData,
-                        beforeSend: () => {
-                            $(".send-button").prop("disabled", true);
-                            formSubmitting = true;
-                        },
-                        success: response => {
-                            /*if (response.status === "error") {
-                                toastr.error(response.message);
-                            }*/
-                        },
-                        error: (xhr, status, error) => {
-                            console.log(xhr, status, error);
-                            toastr.error(error);
-                            $(".send-button").prop("disabled", false);
-                            formSubmitting = false;
-                        },
-                        complete: () => {
-                            $(".send-button").prop("disabled", false);
-                            formSubmitting = false;
-                        }
-                    })
-                })
+                        $.ajax({
+                            method: "POST",
+                            url: '{{ route("user.send-message") }}',
+                            data: formData,
+                            beforeSend: () => {
+                                $(".send-button").prop("disabled", true);
+                                formSubmitting = true;
+                            },
+                            success: () => {
+
+                            },
+                            error: (xhr, status, error) => {
+                                console.log(xhr, status, error);
+                                toastr.error(error);
+                                $(".send-button").prop("disabled", false);
+                                formSubmitting = false;
+                            },
+                            complete: () => {
+                                $(".send-button").prop("disabled", false);
+                                formSubmitting = false;
+                            }
+                        });
+                    });
+                }
+
+                viewChat();
+                sendChat();
             });
         })(jQuery);
     </script>
