@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading Animation</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #loading {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">Loading</div>
+
+<script>
+    // Function to animate the loading text
+    $(document).ready(function() {
+        const loadingText = $('#loading');
+        let dots = '';
+
+        setInterval(function() {
+            loadingText.text('Loading' + dots);
+            dots += '.';
+            if (dots.length > 3) {
+                dots = '';
+            }
+        }, 500); // Adjust the interval to change the speed of animation
+    });
+</script>
+
+</body>
+</html>
