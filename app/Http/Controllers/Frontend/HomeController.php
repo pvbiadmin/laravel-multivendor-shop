@@ -19,9 +19,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Application;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Response;
 
 class HomeController extends Controller
 {
@@ -212,6 +210,8 @@ class HomeController extends Controller
     public function vendorProductsPage(string $id): View|Application|Factory|\Illuminate\Contracts\Foundation\Application
     {
         $products = Product::query()
+            ->withAvg('reviews', 'rating')->withCount('reviews')
+            ->with(['variants', 'category', 'imageGallery'])
             ->where(['status' => 1, 'is_approved' => 1, 'vendor_id' => $id])
             ->orderBy('id', 'DESC')->paginate(6);
 

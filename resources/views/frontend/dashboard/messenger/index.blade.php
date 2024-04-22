@@ -42,7 +42,7 @@
                                                             <span class="pending d-none" id="pending-6">0</span>
                                                         </div>
                                                         <div class="wsus_chat_list_text">
-                                                            <h4>{{ $chatUser->receiverProfile->name }}</h4>
+                                                            <h4>{{ $chatUser->receiverProfile->vendor->shop_name }}</h4>
                                                         </div>
                                                     </button>
                                                 @endforeach
@@ -127,9 +127,9 @@
                     $body.on("click", ".chat-user-profile", e => {
                         const $this = $(e.currentTarget);
 
-                        let receiverId = $this.data("id");
-                        let senderImage = $this.find("img").attr("src");
-                        let chatUserName = $this.find("h4").text();
+                        const receiverId = $this.data("id");
+                        const senderImage = $this.find("img").attr("src");
+                        const chatUserName = $this.find("h4").text();
 
                         $mainChatInbox.attr("data-inbox", receiverId);
 
@@ -214,7 +214,6 @@
                                 </div>
                                 <div class="wsus__chat_single_text">
                                     <p>${messageData}</p>
-                                    <span></span>
                                 </div>
                             </div>`;
 
