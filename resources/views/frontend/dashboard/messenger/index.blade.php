@@ -76,10 +76,10 @@
                                                                        class="message-box" autocomplete="off"
                                                                        name="message" aria-label="message">
                                                                 <input type="hidden" name="receiver_id"
-                                                                       value="" id="receiver_id">
-                                                                <button type="submit"><i
-                                                                        class="fas fa-paper-plane send-button"
-                                                                        aria-hidden="true"></i></button>
+                                                                       id="receiver_id">
+                                                                <button type="submit">
+                                                                    <i class="fas fa-paper-plane send-button"
+                                                                       aria-hidden="true"></i></button>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -127,9 +127,9 @@
                     $body.on("click", ".chat-user-profile", e => {
                         const $this = $(e.currentTarget);
 
-                        const receiverId = $this.data("id");
-                        const senderImage = $this.find("img").attr("src");
-                        const chatUserName = $this.find("h4").text();
+                        let receiverId = $this.data("id");
+                        let senderImage = $this.find("img").attr("src");
+                        let chatUserName = $this.find("h4").text();
 
                         $mainChatInbox.attr("data-inbox", receiverId);
 
@@ -153,28 +153,28 @@
 
                                     let chat;
 
-                                    if (sender_id === USER.id) {
+                                    if (sender_id.toString() === USER.id.toString()) {
                                         chat = `<div class="wsus__chat_single single_chat_2">
-                                        <div class="wsus__chat_single_img">
-                                            <img src="${USER.image}"
-                                                alt="user" class="img-fluid">
-                                        </div>
-                                        <div class="wsus__chat_single_text">
-                                            <p>${message}</p>
-                                            <span>${formatDateTime(created_at)}</span>
-                                        </div>
-                                    </div>`;
+                                                <div class="wsus__chat_single_img">
+                                                    <img src="${USER.image}"
+                                                        alt="user" class="img-fluid">
+                                                </div>
+                                                <div class="wsus__chat_single_text">
+                                                    <p>${message}</p>
+                                                    <span>${formatDateTime(created_at)}</span>
+                                                </div>
+                                            </div>`;
                                     } else {
                                         chat = `<div class="wsus__chat_single">
-                                        <div class="wsus__chat_single_img">
-                                            <img src="${senderImage}"
-                                                alt="user" class="img-fluid">
-                                        </div>
-                                        <div class="wsus__chat_single_text">
-                                            <p>${message}</p>
-                                            <span>${formatDateTime(created_at)}</span>
-                                        </div>
-                                    </div>`;
+                                            <div class="wsus__chat_single_img">
+                                                <img src="${senderImage}"
+                                                    alt="user" class="img-fluid">
+                                            </div>
+                                            <div class="wsus__chat_single_text">
+                                                <p>${message}</p>
+                                                <span>${formatDateTime(created_at)}</span>
+                                            </div>
+                                        </div>`;
                                     }
 
                                     $mainChatInbox.append(chat);
@@ -207,17 +207,16 @@
                             return;
                         }
 
-                        // set message in inbox
                         let message = `<div class="wsus__chat_single single_chat_2">
-                            <div class="wsus__chat_single_img">
-                                <img src="${USER.image}"
-                                    alt="user" class="img-fluid">
-                            </div>
-                            <div class="wsus__chat_single_text">
-                                <p>${messageData}</p>
-                                <span></span>
-                            </div>
-                        </div>`;
+                                <div class="wsus__chat_single_img mb-2">
+                                    <img src="${USER.image}"
+                                        alt="user" class="img-fluid">
+                                </div>
+                                <div class="wsus__chat_single_text">
+                                    <p>${messageData}</p>
+                                    <span></span>
+                                </div>
+                            </div>`;
 
                         $mainChatInbox.append(message);
 

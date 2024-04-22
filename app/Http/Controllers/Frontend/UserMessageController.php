@@ -62,6 +62,10 @@ class UserMessageController extends Controller
         return response(['status' => 'success', 'message' => 'message sent successfully']);
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Foundation\Application|\Illuminate\Http\Response
+     */
     public function getMessages(Request $request)
     {
         $senderId = auth()->user()->id;
