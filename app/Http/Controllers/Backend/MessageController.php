@@ -1,34 +1,32 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Backend;
 
-//use App\Events\MessageEvent;
+/*use App\Events\MessageEvent;*/
+
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class UserMessageController extends Controller
+class MessageController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
-    public function index(): Application|Factory|View|\Illuminate\Foundation\Application
+    public function index()
     {
         $userId = auth()->user()->id;
 
-        $chatUsers = Chat::with('receiverProfile')
-            ->select(['receiver_id'])
-            ->where('sender_id', $userId)
-            ->where('receiver_id', '!=', $userId)
-            ->groupBy('receiver_id')
+        $chatUsers = Chat::with('senderProfile')
+            ->select(['sender_id'])
+            ->where('receiver_id', $userId)
+            ->where('sender_id', '!=', $userId)
+            ->groupBy('sender_id')
             ->get();
 
-        return view('frontend.dashboard.messenger.index', compact('chatUsers'));
+        return view('admin.messenger.index', compact('chatUsers'));
     }
 
     /**
@@ -42,7 +40,7 @@ class UserMessageController extends Controller
 
         $messages = Chat::whereIn('receiver_id', [$senderId, $receiverId])
             ->whereIn('sender_id', [$senderId, $receiverId])
-            ->orderBy('created_at')
+            ->orderBy('created_at', 'asc')
             ->get();
 
         Chat::where([

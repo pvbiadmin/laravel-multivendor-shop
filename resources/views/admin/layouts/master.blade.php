@@ -33,6 +33,14 @@
         <link rel="stylesheet" href="{{ asset('backend/assets/css/rtl.css') }}">
     @endif
 
+    <script>
+        window.USER = {
+            id: "{{ auth()->user()->id }}",
+            name: "{{ auth()->user()->name }}",
+            image: "{{ asset(auth()->user()->image) }}"
+        }
+    </script>
+
     @vite(['resources/js/app.js', 'resources/js/admin.js'])
 </head>
 

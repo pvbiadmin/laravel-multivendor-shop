@@ -26,7 +26,8 @@
                                                         $unseenMessages = \App\Models\Chat::query()
                                                             ->where([
                                                                 'sender_id' => $chatUser->receiverProfile->id,
-                                                                'receiver_id' => auth()->user()->id, 'seen' => 0
+                                                                'receiver_id' => auth()->user()->id,
+                                                                'seen' => 0
                                                             ])->exists();
                                                     @endphp
                                                     <button class="nav-link chat-user-profile"
@@ -62,7 +63,7 @@
                                                         height: 70vh;">
 
                                                         <div class="wsus__chat_area_header">
-                                                            <h2 id="chat-inbox-title">Chat with Daniel Paul</h2>
+                                                            <h2 id="chat-inbox-title"></h2>
                                                         </div>
 
                                                         <div class="wsus__chat_area_body overflow-auto" data-inbox=""
@@ -98,7 +99,7 @@
     </section>
 @endsection
 
-@push( 'scripts' )
+@push ( 'scripts' )
     <script>
         ($ => {
             $(() => {
@@ -166,15 +167,15 @@
                                             </div>`;
                                     } else {
                                         chat = `<div class="wsus__chat_single">
-                                            <div class="wsus__chat_single_img">
-                                                <img src="${senderImage}"
-                                                    alt="user" class="img-fluid">
-                                            </div>
-                                            <div class="wsus__chat_single_text">
-                                                <p>${message}</p>
-                                                <span>${formatDateTime(created_at)}</span>
-                                            </div>
-                                        </div>`;
+                                                <div class="wsus__chat_single_img">
+                                                    <img src="${senderImage}"
+                                                        alt="user" class="img-fluid">
+                                                </div>
+                                                <div class="wsus__chat_single_text">
+                                                    <p>${message}</p>
+                                                    <span>${formatDateTime(created_at)}</span>
+                                                </div>
+                                            </div>`;
                                     }
 
                                     $mainChatInbox.append(chat);
@@ -198,14 +199,15 @@
 
                         const $this = $(e.currentTarget);
                         const formData = $this.serialize();
-                        const {USER} = window;
+                        const messageData = $messageBox.val();
 
-                        let messageData = $messageBox.val();
                         let formSubmitting = false;
 
                         if (formSubmitting || messageData === "") {
                             return;
                         }
+
+                        const {USER} = window;
 
                         let message = `<div class="wsus__chat_single single_chat_2">
                                 <div class="wsus__chat_single_img mb-2">
@@ -218,9 +220,7 @@
                             </div>`;
 
                         $mainChatInbox.append(message);
-
                         $messageBox.val("");
-
                         scrollToBottom()
 
                         $.ajax({
@@ -232,7 +232,6 @@
                                 formSubmitting = true;
                             },
                             success: () => {
-
                             },
                             error: (xhr, status, error) => {
                                 console.log(xhr, status, error);
