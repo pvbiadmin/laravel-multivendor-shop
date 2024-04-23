@@ -2,21 +2,23 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+//use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
+//use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use JetBrains\PhpStorm\ArrayShape;
 
-class MessageEvent implements ShouldBroadcast
+class ChatMessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $message;
     public $receiver_id;
     public $dateTime;
+
     /**
      * Create a new event instance.
      */
@@ -25,7 +27,6 @@ class MessageEvent implements ShouldBroadcast
         $this->message = $message;
         $this->receiver_id = $receiver_id;
         $this->dateTime = $dateTime;
-
     }
 
     /**
@@ -36,11 +37,21 @@ class MessageEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('message.'.$this->receiver_id),
+            new PrivateChannel('message.' . $this->receiver_id),
         ];
     }
 
-    function broadcastWith() : array {
+    /**
+     * @return array
+     */
+    #[ArrayShape([
+        'message' => "",
+        'date_time' => "",
+        'receiver_id' => "",
+        'sender_id' => "mixed",
+        'sender_image' => "string"
+    ])] public function broadcastWith(): array
+    {
         return [
             'message' => $this->message,
             'date_time' => $this->dateTime,

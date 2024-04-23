@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
-/*use App\Events\MessageEvent;*/
-
+use App\Events\ChatMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Http\Request;
@@ -77,7 +76,7 @@ class MessageController extends Controller
 
         $message->save();
 
-//        broadcast(new MessageEvent($message->message, $message->receiver_id, $message->created_at));
+        broadcast(new ChatMessageEvent($message->message, $message->receiver_id, $message->created_at));
 
         return response([
             'status' => 'success',

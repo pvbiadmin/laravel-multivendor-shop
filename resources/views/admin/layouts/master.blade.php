@@ -40,8 +40,6 @@
             image: "{{ asset(auth()->user()->image) }}"
         }
     </script>
-
-    @vite(['resources/js/app.js', 'resources/js/admin.js'])
 </head>
 
 <body>
@@ -106,5 +104,7 @@
 @include( 'admin.layouts.scripts' )
 
 @stack( 'scripts' )
+
+@vite(['resources/js/app.js', 'resources/js/admin.js'])
 </body>
 </html>
