@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Events\MessageEvent;
+use App\Events\ChatMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Chat;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 
 class VendorMessageController extends Controller
 {
     /**
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
      */
-    public function index(): Application|Factory|\Illuminate\Contracts\View\View|\Illuminate\Foundation\Application
+    public function index(): Application|Factory|View|\Illuminate\Foundation\Application
     {
         $userId = auth()->user()->id;
 
@@ -67,7 +67,7 @@ class VendorMessageController extends Controller
 
         $message->save();
 
-        broadcast(new MessageEvent($message->message, $message->receiver_id, $message->created_at));
+        broadcast(new ChatMessageEvent($message->message, $message->receiver_id, $message->created_at));
 
         return response(['status' => 'success', 'message' => 'message sent successfully']);
     }

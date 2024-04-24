@@ -1,8 +1,8 @@
 ($ => {
     $(() => {
-        /*const mainChatInbox = $(".chat-content");*/
+        const mainChatInbox = $(".chat-content");
 
-        /*const formatDateTime = dateTimeString => {
+        const formatDateTime = dateTimeString => {
             const options = {
                 year: 'numeric',
                 month: 'short',
@@ -12,11 +12,11 @@
             }
 
             return new Intl.DateTimeFormat('en-Us', options).format(new Date(dateTimeString));
-        }*/
+        }
 
-        /*const scrollToBottom = () => {
+        const scrollToBottom = () => {
             mainChatInbox.scrollTop(mainChatInbox.prop("scrollHeight"));
-        }*/
+        }
 
         let {Echo, USER} = window;
 
@@ -25,7 +25,7 @@
             e => {
                 console.log(e);
 
-                /* *
+                /* */
                 const {sender_id, sender_image, message, date_time} = e;
 
                 if (mainChatInbox.attr("data-inbox").toString() === sender_id.toString()) {
