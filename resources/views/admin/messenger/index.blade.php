@@ -14,7 +14,7 @@
         <div class="section-body">
 
             <div class="row align-items-center justify-content-center">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card" style="height: 70vh;">
                         <div class="card-header">
                             <h4>Chat List</h4>
@@ -28,18 +28,23 @@
                                                 'sender_id' => $chatUser->senderProfile->id,
                                                 'receiver_id' => auth()->user()->id,
                                                 'seen' => 0
-                                            ])->exists();
+                                            ])->get();
+
+                                        $countUnseenMsg = count($unseenMessages);
                                     @endphp
                                     <li class="media chat-user-profile" data-id="{{ $chatUser->senderProfile->id }}"
                                         style="cursor: pointer">
                                         <img alt="image"
-                                             class="mr-3 rounded-circle {{ $unseenMessages ? 'msg-notification' : '' }}"
+                                             class="mr-3 rounded-circle avatar-chat"
                                              width="50" src="{{ asset($chatUser->senderProfile->image) }}">
+                                        <span class="pending {{ $countUnseenMsg > 0
+                                            ? '' : 'd-none' }}">{{ $countUnseenMsg }}</span>
                                         <div class="media-body">
                                             <div
                                                 class="mt-0 mb-1 font-weight-bold chat-user-name">{{
                                                     $chatUser->senderProfile->name }}</div>
-                                            {{-- <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i> Online</div> --}}
+                                             <div class="text-success text-small font-600-bold">
+                                                 <i class="fas fa-circle"></i> Online</div>
                                         </div>
                                     </li>
                                 @endforeach
@@ -48,7 +53,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-8">
                     <div class="card chat-box d-none" id="mychatbox" style="height: 70vh;">
                         <div class="card-header">
                             <h4 id="chat-inbox-title"></h4>
@@ -108,7 +113,7 @@
                         const receiverImage = $this.find("img").attr("src")
                         const chatUserName = $this.find(".chat-user-name").text();
 
-                        $this.find("img").removeClass("msg-notification");
+                        $this.find(".pending").addClass("d-none");
                         $(".chat-box").removeClass("d-none");
                         mainChatInbox.attr("data-inbox", receiverId);
                         $("#receiver_id").val(receiverId);
@@ -134,7 +139,8 @@
 
                                     if (sender_id.toString() === USER.id.toString()) {
                                         chat = `<div class="chat-item chat-right">
-                                            <img style="height: 50px; object-fit: cover;" src="${USER.image}" alt="">
+                                            <img style="height: 50px; object-fit: cover;"
+                                                class="avatar-chat" src="${USER.image}" alt="">
                                             <div class="chat-details">
                                                 <div class="chat-text">${message}</div>
                                                 <div class="chat-time">${formatDateTime(created_at)}</div>
@@ -142,7 +148,7 @@
                                         </div>`;
                                     } else {
                                         chat = `<div class="chat-item chat-left">
-                                            <img src="${receiverImage}" alt="">
+                                            <img src="${receiverImage}" class="avatar-chat" alt="">
                                             <div class="chat-details">
                                                 <div class="chat-text">${message}</div>
                                                 <div class="chat-time">${formatDateTime(created_at)}</div>

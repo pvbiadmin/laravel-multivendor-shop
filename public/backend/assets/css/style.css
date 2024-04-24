@@ -154,7 +154,7 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
     line-height: 34px;
 }
 
-@media (max-width: 575.98px) {
+@media (max-width: 576px) {
     .lead {
         font-size: 17px;
         line-height: 30px;
@@ -263,7 +263,7 @@ select.form-control:not([size]):not([multiple]) {
     font-weight: 600;
     color: #34395e;
     font-size: 12px;
-    letter-spacing: .5px;
+    letter-spacing: 1px;
 }
 
 .form-group.floating-addon {
@@ -281,7 +281,6 @@ select.form-control:not([size]):not([multiple]) {
 .form-group.floating-addon:not(.floating-addon-not-append) .input-group-append {
     position: absolute;
     top: 0;
-    left: 0;
     z-index: 5;
     left: initial;
     right: 0;
@@ -947,7 +946,6 @@ select.form-control:not([size]):not([multiple]) {
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
-    z-index: 99;
     z-index: 99;
 }
 
@@ -2111,7 +2109,7 @@ h6 .badge {
 
 .navbar.active {
     background-color: #6777ef;
-    box-shadow: rgba(103, 119, 239, 0.2) rgba(0, 0, 0, 0.03);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03), inset 0 2px 4px rgba(103, 119, 239, 0.2);
 }
 
 .navbar-bg {
@@ -2202,7 +2200,7 @@ h6 .badge {
     left: 34px;
     content: '\f0d8';
     font-weight: 600;
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', sans-serif;
     color: #fff;
     font-size: 30px;
 }
@@ -2221,7 +2219,6 @@ h6 .badge {
 }
 
 .navbar .form-inline .search-result .search-item a {
-    display: block;
     padding: 13px 18px;
     text-decoration: none;
     color: #34395e;
@@ -2464,7 +2461,6 @@ h6 .badge {
     color: #191d21 !important;
     padding: 10px 20px;
     line-height: 20px;
-    color: #98a6ad;
 }
 
 .dropdown-menu.dropdown-menu-sm a {
@@ -2742,14 +2738,14 @@ a.dropdown-item:focus, a.dropdown-item:active, a.dropdown-item.active {
 
 :root {
     /* Colors */
-    --primary: color(primary);
-    --secondary: color(fontdark);
-    --success: color(success);
-    --info: color(info);
-    --warning: color(warning);
-    --danger: color(danger);
-    --light: color(light);
-    --dark: color(dark);
+    --primary: #6777ef;
+    --secondary: #cdd3d8;
+    --success: #63ed7a;
+    --info: #3abaf4;
+    --warning: #ffa426;
+    --danger: #fc544b;
+    --light: #e3eaef;
+    --dark: #191d21;
 }
 
 body {
@@ -2822,7 +2818,6 @@ a.bb {
 }
 
 .budget-price {
-    display: inline-block;
     width: 100%;
     display: flex;
     align-items: center;
@@ -2887,15 +2882,14 @@ a.bb {
 }
 
 blockquote {
-    padding: 20px;
-    padding-left: 40px;
+    padding: 20px 20px 20px 40px;
     font-style: oblique;
     background-color: #f9f9f9;
     border-radius: 3px;
     position: relative;
-    font-family: 'Time new Romans';
+    font-family: 'Time new Romans', sans-serif;
     font-size: 16px;
-    letter-spacing: .3px;
+    letter-spacing: 0;
 }
 
 blockquote:before {
@@ -3081,7 +3075,6 @@ pre {
 }
 
 .section .section-header {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
     background-color: #fff;
     border-radius: 3px;
@@ -3376,7 +3369,7 @@ body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a {
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a.has-dropdown:after {
     content: "";
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', sans-serif;
     font-weight: 900;
     position: absolute;
     top: 50%;
@@ -3513,8 +3506,6 @@ body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link {
     letter-spacing: .3px;
     height: 70px;
     padding: 0;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
     margin-left: 15px;
     margin-right: 15px;
     position: relative;
@@ -3526,11 +3517,10 @@ body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link.has-d
 
 body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item > .nav-link.has-dropdown:after {
     content: "";
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', sans-serif;
     font-weight: 900;
     position: absolute;
     top: 50%;
-    right: 20px;
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     font-size: 12px;
@@ -3576,11 +3566,10 @@ body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item .dropdown-menu .n
 
 body.layout-3 .navbar.navbar-secondary .navbar-nav > .nav-item .dropdown-menu .nav-item .nav-link.has-dropdown:after {
     content: "";
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', sans-serif;
     font-weight: 900;
     position: absolute;
     top: 50%;
-    right: 20px;
     -webkit-transform: translate(0, -50%);
     transform: translate(0, -50%);
     font-size: 12px;
@@ -3719,7 +3708,7 @@ body.layout-3 .main-footer {
 
 .main-sidebar .sidebar-menu li a.has-dropdown:after {
     content: "";
-    font-family: 'Font Awesome 5 Free';
+    font-family: 'Font Awesome 5 Free', sans-serif;
     font-weight: 900;
     position: absolute;
     top: 50%;
@@ -3955,4 +3944,23 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .logo-footer-admin img {
     max-width: 100%; /* Ensure the logo doesn't exceed the container */
     display: block;
+}
+
+.media span {
+    background: #63ed7a;
+    color: #fff;
+    width: 18px;
+    height: 18px;
+    display: block;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    position: absolute;
+}
+
+.avatar-chat {
+    box-shadow: rgba(0, 0, 0, 0.3) 0 3px 8px;
+    border: 5px solid #fff;
 }

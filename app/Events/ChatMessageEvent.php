@@ -17,15 +17,17 @@ class ChatMessageEvent implements ShouldBroadcast
 
     public $message;
     public $receiver_id;
+    public $unseen_messages;
     public $dateTime;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $receiver_id, $dateTime)
+    public function __construct($message, $receiver_id, $unseen_messages, $dateTime)
     {
         $this->message = $message;
         $this->receiver_id = $receiver_id;
+        $this->unseen_messages = $unseen_messages;
         $this->dateTime = $dateTime;
     }
 
@@ -49,7 +51,8 @@ class ChatMessageEvent implements ShouldBroadcast
         'date_time' => "",
         'receiver_id' => "",
         'sender_id' => "mixed",
-        'sender_image' => "string"
+        'sender_image' => "string",
+        'unseen_messages' => "",
     ])] public function broadcastWith(): array
     {
         return [
@@ -57,7 +60,8 @@ class ChatMessageEvent implements ShouldBroadcast
             'date_time' => $this->dateTime,
             'receiver_id' => $this->receiver_id,
             'sender_id' => auth()->user()->id,
-            'sender_image' => asset(auth()->user()->image)
+            'sender_image' => asset(auth()->user()->image),
+            'unseen_messages' => $this->unseen_messages,
         ];
     }
 }

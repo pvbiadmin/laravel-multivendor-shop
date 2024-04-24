@@ -67,7 +67,17 @@ class VendorMessageController extends Controller
 
         $message->save();
 
-        broadcast(new ChatMessageEvent($message->message, $message->receiver_id, $message->created_at));
+        $unseenMessages = Chat::query()
+            ->where([
+                'sender_id' => $message->sender_id,
+                'receiver_id' => $message->receiver_id,
+                'seen' => 0
+            ])->get();
+
+        $countUnseenMsg = count($unseenMessages);
+
+        broadcast(new ChatMessageEvent(
+            $message->message, $message->receiver_id, $countUnseenMsg, $message->created_at));
 
         return response(['status' => 'success', 'message' => 'message sent successfully']);
     }

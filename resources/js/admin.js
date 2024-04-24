@@ -25,8 +25,7 @@
             e => {
                 console.log(e);
 
-                /* */
-                const {sender_id, sender_image, message, date_time} = e;
+                const {sender_id, sender_image, message, date_time, unseen_messages} = e;
 
                 if (mainChatInbox.attr("data-inbox").toString() === sender_id.toString()) {
                     const chat = `<div class="chat-item chat-left">
@@ -39,18 +38,16 @@
 
                     mainChatInbox.append(chat);
                     scrollToBottom();
-
-                    // add notification circle in profile
-                    $(".chat-user-profile").each(e => {
-                        const $this = $(e.currentTarget);
-                        const profileUserId = $this.data("id");
-
-                        if (profileUserId.toString() === sender_id.toString()) {
-                            $this.find("img").addClass("msg-notification");
-                        }
-                    });
                 }
-                /* */
+
+                $(".chat-user-profile").each((index, element) => {
+                    const $this = $(element);
+                    const profileUserId = $this.data("id");
+
+                    if (profileUserId.toString() === sender_id.toString()) {
+                        $this.find(".pending").removeClass("d-none").text(unseen_messages);
+                    }
+                });
             }
         );
     });

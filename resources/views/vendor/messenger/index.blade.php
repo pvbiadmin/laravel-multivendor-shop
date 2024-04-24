@@ -23,7 +23,9 @@
                                                                 'sender_id' => $chatUser->senderProfile->id,
                                                                 'receiver_id' => auth()->user()->id,
                                                                 'seen' => 0
-                                                            ])->exists();
+                                                            ])->get();
+
+                                                        $countUnseenMsg = count($unseenMessages);
                                                     @endphp
                                                     <button class="nav-link chat-user-profile"
                                                             data-id="{{ $chatUser->senderProfile->id }}"
@@ -31,15 +33,16 @@
                                                             data-bs-target="#v-pills-home" type="button" role="tab"
                                                             aria-controls="v-pills-home" aria-selected="true">
                                                         <div
-                                                            class="wsus_chat_list_img {{ $unseenMessages
-                                                                ? 'msg-notification' : ''}}">
+                                                            class="wsus_chat_list_img">
                                                             <img src="{{ asset($chatUser->senderProfile->image) }}"
                                                                  alt="user" class="img-fluid">
-                                                            <span class="pending d-none" id="pending-6">0</span>
+                                                            <span class="pending {{ $countUnseenMsg > 0
+                                                                ? '' : 'd-none' }}" id="pending-6">{{
+                                                                $countUnseenMsg }}</span>
                                                         </div>
                                                         <div class="wsus_chat_list_text">
                                                             <h4>{{ $chatUser->senderProfile->name }}</h4>
-                                                            {{--<span class="status active">online</span>--}}
+                                                            <span class="status active">online</span>
                                                         </div>
                                                     </button>
                                                 @endforeach
@@ -126,7 +129,7 @@
                         $mainChatInbox.attr("data-inbox", receiverId);
 
                         $("#receiver_id").val(receiverId);
-                        $this.find(".wsus_chat_list_img").removeClass("msg-notification");
+                        $this.find(".pending").addClass("d-none");
 
                         $.ajax({
                             method: 'GET',
