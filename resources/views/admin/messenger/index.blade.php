@@ -17,7 +17,7 @@
                 <div class="col-md-3">
                     <div class="card" style="height: 70vh;">
                         <div class="card-header">
-                            <h4>Who's Online?</h4>
+                            <h4>Chat List</h4>
                         </div>
                         <div class="card-body">
                             <ul class="list-unstyled list-unstyled-border">

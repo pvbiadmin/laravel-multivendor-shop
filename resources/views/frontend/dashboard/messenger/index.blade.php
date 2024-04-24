@@ -56,7 +56,7 @@
                                 </div>
 
                                 <div class="col-xl-8 col-md-7">
-                                    <div class="wsus__chat_main_area">
+                                    <div class="wsus__chat_main_area" style="position: relative;">
                                         <div class="tab-content" id="v-pills-tabContent">
                                             <div class="tab-pane fade" id="v-pills-home"
                                                  role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -68,7 +68,8 @@
 
                                                     <div class="wsus__chat_area_body" data-inbox=""></div>
 
-                                                    <div class="wsus__chat_area_footer">
+                                                    <div class="wsus__chat_area_footer"
+                                                         style="position: absolute; bottom: 0; width: 100%;">
                                                         <form id="message-form">
                                                             @csrf
                                                             <input type="text" placeholder="Type Message"
@@ -205,7 +206,7 @@
 
                         const {USER} = window;
 
-                        let message = `<div class="wsus__chat_single single_chat_2">
+                        const message = `<div class="wsus__chat_single single_chat_2">
                                 <div class="wsus__chat_single_img mb-2">
                                     <img src="${USER.image}"
                                         alt="user" class="img-fluid">
@@ -217,7 +218,7 @@
 
                         $mainChatInbox.append(message);
                         $messageBox.val("");
-                        scrollToBottom()
+                        scrollToBottom();
 
                         $.ajax({
                             method: "POST",
@@ -228,6 +229,7 @@
                                 formSubmitting = true;
                             },
                             success: () => {
+
                             },
                             error: (xhr, status, error) => {
                                 console.log(xhr, status, error);
