@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/viewer.html
+/viewer.json
+/viewer.php
+/_ide_helper.php
