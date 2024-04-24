@@ -165,7 +165,6 @@
                                         <li><a href="javascript:" class="add-wishlist"
                                                data-id="{{ $product->id }}"><i class="fal fa-heart"></i></a>
                                         </li>
-                                        <li><a href="#"><i class="far fa-random"></i></a></li>
                                     </ul>
                                 </form>
 
