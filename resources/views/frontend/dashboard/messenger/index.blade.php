@@ -7,20 +7,21 @@
 @section( 'content' )
     <section id="wsus__dashboard">
         <div class="container-fluid">
+
             @include( 'frontend.dashboard.layouts.sidebar' )
+
             <div class="row">
                 <div class="col-xl-9 col-xxl-10 col-lg-9 ms-auto">
                     <div class="dashboard_content mt-2 mt-md-0">
-                        <h3><i class="fas fa-comments-alt" aria-hidden="true"></i> Messages</h3>
+                        <h3><i class="fas fa-comments-alt" aria-hidden="true"></i> Chat List</h3>
                         <div class="wsus__dashboard_review">
                             <div class="row">
                                 <div class="col-xl-4 col-md-5">
-                                    <div class="wsus__chatlist d-flex align-items-start" style="height: 516px">
+                                    <div class="wsus__chatlist d-flex align-items-start">
                                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                                              aria-orientation="vertical">
                                             <h2>Seller List</h2>
-                                            <div class="wsus__chatlist_body overflow-auto"
-                                                 style="width: auto; max-height: 400px;">
+                                            <div class="wsus__chatlist_body">
                                                 @foreach ( $chatUsers as $chatUser )
                                                     @php
                                                         $unseenMessages = \App\Models\Chat::query()
@@ -44,6 +45,7 @@
                                                         </div>
                                                         <div class="wsus_chat_list_text">
                                                             <h4>{{ $chatUser->receiverProfile->vendor->shop_name }}</h4>
+                                                            {{--<span class="status active">online</span>--}}
                                                         </div>
                                                     </button>
                                                 @endforeach
@@ -54,37 +56,31 @@
                                 </div>
 
                                 <div class="col-xl-8 col-md-7">
-                                    <div class="wsus__chat_main_area" style="height: 516px">
+                                    <div class="wsus__chat_main_area">
                                         <div class="tab-content" id="v-pills-tabContent">
-                                            <div class="tab-pane fade show" id="v-pills-home" role="tabpanel"
-                                                 aria-labelledby="v-pills-home-tab">
-                                                <div id="chat_box">
-                                                    <div class="wsus__chat_area" style="position: relative;
-                                                        height: 70vh;">
+                                            <div class="tab-pane fade" id="v-pills-home"
+                                                 role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                                <div class="wsus__chat_area" id="chat_box">
 
-                                                        <div class="wsus__chat_area_header">
-                                                            <h2 id="chat-inbox-title"></h2>
-                                                        </div>
-
-                                                        <div class="wsus__chat_area_body overflow-auto" data-inbox=""
-                                                             style="width: auto; max-height: 400px;"></div>
-
-                                                        <div class="wsus__chat_area_footer"
-                                                             style="position: absolute; width: 100%; bottom: 0;">
-                                                            <form id="message-form">
-                                                                @csrf
-                                                                <input type="text" placeholder="Type Message"
-                                                                       class="message-box" autocomplete="off"
-                                                                       name="message" aria-label="message">
-                                                                <input type="hidden" name="receiver_id"
-                                                                       id="receiver_id">
-                                                                <button type="submit">
-                                                                    <i class="fas fa-paper-plane send-button"
-                                                                       aria-hidden="true"></i></button>
-                                                            </form>
-                                                        </div>
+                                                    <div class="wsus__chat_area_header">
+                                                        <h2 id="chat-inbox-title"></h2>
                                                     </div>
 
+                                                    <div class="wsus__chat_area_body" data-inbox=""></div>
+
+                                                    <div class="wsus__chat_area_footer">
+                                                        <form id="message-form">
+                                                            @csrf
+                                                            <input type="text" placeholder="Type Message"
+                                                                   class="message-box" autocomplete="off"
+                                                                   name="message" aria-label="message">
+                                                            <input type="hidden" name="receiver_id"
+                                                                   id="receiver_id">
+                                                            <button type="submit">
+                                                                <i class="fas fa-paper-plane send-button"
+                                                                   aria-hidden="true"></i></button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
