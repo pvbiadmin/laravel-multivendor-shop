@@ -21,12 +21,14 @@ import Pusher from 'pusher-js';
 
 window.Pusher = Pusher;
 
+const {PUSHER_SETTING} = window;
+
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: import.meta.env.VITE_PUSHER_APP_KEY,
-    cluster: import.meta.env.VITE_PUSHER_APP_CLUSTER ?? 'ap1',
-    wsHost: import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST
-        : `ws-${import.meta.env.VITE_PUSHER_APP_CLUSTER}.pusher.com`,
+    key: /*import.meta.env.VITE_PUSHER_APP_KEY*/PUSHER_SETTING.key,
+    cluster: /*import.meta.env.VITE_PUSHER_APP_CLUSTER*/PUSHER_SETTING.cluster ?? 'ap1',
+    wsHost: /*import.meta.env.VITE_PUSHER_HOST ? import.meta.env.VITE_PUSHER_HOST
+        : */`ws-${/*import.meta.env.VITE_PUSHER_APP_CLUSTER*/PUSHER_SETTING.cluster}.pusher.com`,
     wsPort: import.meta.env.VITE_PUSHER_PORT ?? 80,
     wssPort: import.meta.env.VITE_PUSHER_PORT ?? 443,
     forceTLS: (import.meta.env.VITE_PUSHER_SCHEME ?? 'https') === 'https',

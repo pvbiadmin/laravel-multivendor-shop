@@ -44,6 +44,11 @@
             name: "{{ auth()->user()->name }}",
             image: "{{ asset(auth()->user()->image) }}"
         }
+
+        window.PUSHER_SETTING = {
+            key: "{{ $pusherSetting->pusher_key }}",
+            cluster: "{{ $pusherSetting->pusher_cluster }}"
+        }
     </script>
 </head>
 
